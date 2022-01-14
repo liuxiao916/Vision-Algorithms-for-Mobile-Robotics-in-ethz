@@ -5,3 +5,9 @@ Implement in Matlab
 
 ## Exercise 1 - Augmented Reality Wireframe Cube
 ![Result for Exercise1](doc/E1.jpg)
+
+## Exercise 2 - The DLT algorithm
+![Result for Exercise1](doc/E2.jpg)
+
+## Exercise 3 - Harris Corner Detection and Keypoint Tracking
+![Result for Exercise1](doc/E2.jpg)

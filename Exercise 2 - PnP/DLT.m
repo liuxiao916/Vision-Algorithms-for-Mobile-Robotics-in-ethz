@@ -18,15 +18,15 @@ number_of_points = size(corners_world,1);
 %    Q(2*index-1,:)=[corners_world(index,1),corners_world(index,2),corners_world(index,3),1,0,0,0,0,-normalized_corners(1,index)*corners_world(index,1),-normalized_corners(1,index)*corners_world(index,2),-normalized_corners(1,index)*corners_world(index,3),-normalized_corners(1,index)];
 %    Q(2*index,:)=[0,0,0,0,corners_world(index,1),corners_world(index,2),corners_world(index,3),1,-normalized_corners(2,index)*corners_world(index,1),-normalized_corners(2,index)*corners_world(index,2),-normalized_corners(2,index)*corners_world(index,3),-normalized_corners(2,index)];
 %end
-M = estimatePoseDLT(corners, corners_world, K) 
-projected_points = reprojectPoints([corners_world';ones(1,12)] ,M,K)
+M = estimatePoseDLT(corners, corners_world, K);
+projected_points = reprojectPoints([corners_world';ones(1,12)] ,M,K);
 
 %plot
 figure(1)
 imshow(img1_gray)
 hold on
 % plot(projected_points(1,:),projected_points(2,:),'.','MarkerSize',20,'color',[1,0,0])
-corners_reshape = reshape(corners(1,:),2,[])
+corners_reshape = reshape(corners(1,:),2,[]);
 plot(corners_reshape(1,:), corners_reshape(2,:), 'o'); 
 hold on;
 plot(projected_points(1,:),projected_points(2,:), '+');
