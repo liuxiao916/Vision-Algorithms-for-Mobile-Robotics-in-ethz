@@ -10,4 +10,8 @@ Implement in Matlab
 ![Result for Exercise1](doc/E2.jpg)
 
 ## Exercise 3 - Harris Corner Detection and Keypoint Tracking
-![Result for Exercise1](doc/E2.jpg)
+![Result for Exercise1](doc/E3.jpg)
+
+## Exercise 4 - SIFT
+
+![Result for Exercise1](doc/E4.jpg)
