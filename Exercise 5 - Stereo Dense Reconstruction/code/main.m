@@ -69,64 +69,64 @@ zlabel('Z');
 
 %% Part 4: Accumulate point clouds over sequence and write PLY
 
-warning(['Accumulating point cloud over 100 stereo pairs! This can ' ...
-    'take a lot of time (~an hour or more)! The progress bar can take ' ...
-    'several seconds to update.']);
-
-all_points = [];
-all_intensities = [];
-
-% Shorten to get a point cloud faster.
-image_range = 0:99;
-
-h = waitbar(0, 'Accumulating point clouds...');
-
-for i = image_range
-    l = imresize(imread(sprintf('../data/left/%06d.png',i)), 0.5);
-    r = imresize(imread(sprintf('../data/right/%06d.png',i)), 0.5);
-    disp_img = getDisparity(...
-        l, r, patch_radius, min_disp, max_disp);
-    [p_C_points, intensities] = disparityToPointCloud(...
-        disp_img, K, baseline, l);
-    % From camera frame to world frame:
-    R_C_frame = [0 -1 0; 0 0 -1; 1 0 0];
-    p_F_points = R_C_frame^-1 * p_C_points;
-    % Use only points within limits:
-    filter = ...
-        (p_F_points(1, :) > xlims(1)) & (p_F_points(1, :) < xlims(2)) & ...
-        (p_F_points(2, :) > ylims(1)) & (p_F_points(2, :) < ylims(2)) & ...
-        (p_F_points(3, :) > zlims(1)) & (p_F_points(3, :) < zlims(2));
-    p_F_points = p_F_points(:, filter);
-    intensities = intensities(:, filter);
-    
-    T_W_C = reshape(poses(i+1, :), 4, 3)';
-    T_W_F = T_W_C * [R_C_frame zeros(3, 1); zeros(1, 3) 1];
-    all_points = [all_points ...
-        (T_W_F(1:3, 1:3) * p_F_points + T_W_F(1:3, end))];
-    all_intensities = [all_intensities intensities];
-    
-    if 0
-        figure(4);
-        scatter3(all_points(1, :), all_points(2, :), all_points(3, :), ...
-            20 * ones(1, length(all_points)), ...
-            repmat(single(all_intensities)'/255, [1 3]), 'filled');
-        axis equal;
-        axis vis3d;
-        grid off;
-        pause(0.01);
-    end
-    
-    waitbar(i/image_range(end), h);
-end
-
-close(h);
-
-file = fopen('points.ply', 'w');
-fprintf(file, ['ply\nformat ascii 1.0\nelement vertex %d\nproperty '...
-    'double x\nproperty double y\nproperty double z\nproperty uchar red'...
-    '\nproperty uchar green\nproperty uchar blue\nend_header\n'], ...
-    length(all_points));
-fclose(file);
-dlmwrite('points.ply', ...
-    [all_points' repmat(single(all_intensities)', [1 3])], ...
-    '-append', 'delimiter', ' ');
+% warning(['Accumulating point cloud over 100 stereo pairs! This can ' ...
+%     'take a lot of time (~an hour or more)! The progress bar can take ' ...
+%     'several seconds to update.']);
+% 
+% all_points = [];
+% all_intensities = [];
+% 
+% % Shorten to get a point cloud faster.
+% image_range = 0:99;
+% 
+% h = waitbar(0, 'Accumulating point clouds...');
+% 
+% for i = image_range
+%     l = imresize(imread(sprintf('../data/left/%06d.png',i)), 0.5);
+%     r = imresize(imread(sprintf('../data/right/%06d.png',i)), 0.5);
+%     disp_img = getDisparity(...
+%         l, r, patch_radius, min_disp, max_disp);
+%     [p_C_points, intensities] = disparityToPointCloud(...
+%         disp_img, K, baseline, l);
+%     % From camera frame to world frame:
+%     R_C_frame = [0 -1 0; 0 0 -1; 1 0 0];
+%     p_F_points = R_C_frame^-1 * p_C_points;
+%     % Use only points within limits:
+%     filter = ...
+%         (p_F_points(1, :) > xlims(1)) & (p_F_points(1, :) < xlims(2)) & ...
+%         (p_F_points(2, :) > ylims(1)) & (p_F_points(2, :) < ylims(2)) & ...
+%         (p_F_points(3, :) > zlims(1)) & (p_F_points(3, :) < zlims(2));
+%     p_F_points = p_F_points(:, filter);
+%     intensities = intensities(:, filter);
+%     
+%     T_W_C = reshape(poses(i+1, :), 4, 3)';
+%     T_W_F = T_W_C * [R_C_frame zeros(3, 1); zeros(1, 3) 1];
+%     all_points = [all_points ...
+%         (T_W_F(1:3, 1:3) * p_F_points + T_W_F(1:3, end))];
+%     all_intensities = [all_intensities intensities];
+%     
+%     if 0
+%         figure(4);
+%         scatter3(all_points(1, :), all_points(2, :), all_points(3, :), ...
+%             20 * ones(1, length(all_points)), ...
+%             repmat(single(all_intensities)'/255, [1 3]), 'filled');
+%         axis equal;
+%         axis vis3d;
+%         grid off;
+%         pause(0.01);
+%     end
+%     
+%     waitbar(i/image_range(end), h);
+% end
+% 
+% close(h);
+% 
+% file = fopen('points.ply', 'w');
+% fprintf(file, ['ply\nformat ascii 1.0\nelement vertex %d\nproperty '...
+%     'double x\nproperty double y\nproperty double z\nproperty uchar red'...
+%     '\nproperty uchar green\nproperty uchar blue\nend_header\n'], ...
+%     length(all_points));
+% fclose(file);
+% dlmwrite('points.ply', ...
+%     [all_points' repmat(single(all_intensities)', [1 3])], ...
+%     '-append', 'delimiter', ' ');
