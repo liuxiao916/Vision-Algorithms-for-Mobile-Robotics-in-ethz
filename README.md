@@ -17,3 +17,7 @@ Implement in Matlab
 
 ## Exercise 5 Stereo Dense Reconstruction
 ![Result for Exercise5](doc/E5.jpg)
+
+## Exercise 6 Two-view Geometry
+
+![Result for Exercise6](doc/E6.jpg)
