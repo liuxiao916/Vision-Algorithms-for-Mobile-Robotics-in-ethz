@@ -21,3 +21,7 @@ Implement in Matlab
 ## Exercise 6 Two-view Geometry
 
 ![Result for Exercise6](doc/E6.jpg)
+
+## Exercise 7  From images to localization
+
+![Result for Exercise7](doc/E7.jpg)
