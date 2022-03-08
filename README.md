@@ -19,9 +19,10 @@ Implement in Matlab
 ![Result for Exercise5](doc/E5.jpg)
 
 ## Exercise 6 Two-view Geometry
-
 ![Result for Exercise6](doc/E6.jpg)
 
 ## Exercise 7  From images to localization
-
 ![Result for Exercise7](doc/E7.jpg)
+
+## Exercise 8  Lucas-Kanade tracker
+![Result for Exercise8](doc/E8.png)
